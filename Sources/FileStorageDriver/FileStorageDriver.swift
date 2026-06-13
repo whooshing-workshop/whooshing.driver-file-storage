@@ -23,7 +23,7 @@ extension Whooshing {
     /// - Parameters:
     ///     - db: 用于存储文件索引的数据库
     ///     - storagePath: 加密文件在文件系统中存储的位置，相对沙盒文件夹中的位置
-    ///     - logger: 日志实例
+    ///     - logger: 日志实例，不会直接使用该 logger 的 label，会派生 .filestorage 使用
     ///     - dirCreateAction: 创建动作，可选择自动创建根文件夹或无任何动作
     ///     - debugging: 调试状态，置为 true 则启动调试模式
     public func syncMakeFileStorage(
@@ -49,7 +49,7 @@ extension Whooshing {
     /// - Parameters:
     ///     - db: 用于存储文件索引的数据库
     ///     - storagePath: 加密文件在文件系统中存储的位置，相对沙盒文件夹中的位置
-    ///     - logger: 日志实例
+    ///     - logger: 日志实例，不会直接使用该 logger 的 label，会派生 .filestorage 使用
     ///     - dirCreateAction: 创建动作，可选择自动创建根文件夹或无任何动作
     ///     - debugging: 调试状态，置为 true 则启动调试模式
     public func makeFileStorage(
@@ -59,6 +59,7 @@ extension Whooshing {
         dirCreateAction: DirCreateAction = .noAction,
         debugging: Bool = false
     ) async -> Result<FileStorage, Failure> {
+        let logger = logger.derive(subId: "filestorage")
         let preLogger = logger.derive(subId: "preinit")
         
         preLogger.info("进行接入文件加密系统前置任务", metadata: [

@@ -21,6 +21,8 @@ struct EnvironmentParsingTests {
             "WHOOSHING_API_SERVICE_MANAGER_URL": "https://example.com",
             "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
             
+            "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
+            
             "WHOOSHING_API_SERVICE_FILE_STORAGE_DIR": "~/testing",
             "WHOOSHING_API_SERVICE_FILE_STORAGE_UNIX_PERMISSION_OWNER_ID": "1001",
             "WHOOSHING_API_SERVICE_FILE_STORAGE_UNIX_PERMISSION_GROUP_ID": "1002",
@@ -74,6 +76,8 @@ struct EnvironmentParsingTests {
         #expect(project.dbServices.count == 2)
         #expect(project.managerUrl.absoluteString == "https://example.com")
         
+        #expect(project.log.directory.absoluteString == "/User/tester/logfile.log")
+        
         #expect(project.dbServices[0].id == .init(string: "service_1"))
         #expect(project.dbServices[0].port == 5432)
         #expect(project.dbServices[0].dbs.count == 1)
@@ -103,6 +107,8 @@ struct EnvironmentParsingTests {
             "WHOOSHING_API_SERVICE_DOMAIN": "testing.whooshing.space",
             "WHOOSHING_API_SERVICE_MANAGER_URL": "https://example.com",
             "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
+            
+            "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
             
             "WHOOSHING_API_SERVICE_FILE_STORAGE_DIR": "~/testing",
             "WHOOSHING_API_SERVICE_FILE_STORAGE_UNIX_PERMISSION_OWNER_ID": "1001",
@@ -169,6 +175,8 @@ struct EnvironmentParsingTests {
             "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
             "WHOOSHING_API_SERVICE_DB_SERVICES_COUNT": "2",
             
+            "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
+            
                 "WHOOSHING_API_SERVICE_DB_SERVICES_1_NAME": "service_1",
                 "WHOOSHING_API_SERVICE_DB_SERVICES_1_PORT": "5432",
                 "WHOOSHING_API_SERVICE_DB_SERVICES_1_DBS_COUNT": "1",
@@ -228,6 +236,8 @@ struct EnvironmentParsingTests {
                 "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
                 "WHOOSHING_API_SERVICE_DB_SERVICES_COUNT": "2",
                 
+                "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
+                
                     "WHOOSHING_API_SERVICE_DB_SERVICES_1_NAME": "service_1",
                     "WHOOSHING_API_SERVICE_DB_SERVICES_1_PORT": "5432",
                     "WHOOSHING_API_SERVICE_DB_SERVICES_1_DBS_COUNT": "1",
@@ -259,6 +269,8 @@ struct EnvironmentParsingTests {
                 "WHOOSHING_API_SERVICE_MANAGER_URL": "https://example.com",
                 "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
                 "WHOOSHING_API_SERVICE_DB_SERVICES_COUNT": "2",
+                
+                "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
                 
                     "WHOOSHING_API_SERVICE_DB_SERVICES_1_NAME": "service_1",
                     "WHOOSHING_API_SERVICE_DB_SERVICES_1_PORT": "5432",
@@ -292,6 +304,8 @@ struct EnvironmentParsingTests {
                 "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
                 "WHOOSHING_API_SERVICE_DB_SERVICES_COUNT": "2",
                 
+                "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
+                
                     "WHOOSHING_API_SERVICE_DB_SERVICES_1_NAME": "service_1",
                     "WHOOSHING_API_SERVICE_DB_SERVICES_1_PORT": "5432",
                     "WHOOSHING_API_SERVICE_DB_SERVICES_1_DBS_COUNT": "1",
@@ -320,6 +334,8 @@ struct EnvironmentParsingTests {
                 "WHOOSHING_API_SERVICE_MANAGER_URL": "https://example.com",
                 "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
                 "WHOOSHING_API_SERVICE_DB_SERVICES_COUNT": "2",
+                
+                "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
                     
                     "WHOOSHING_API_SERVICE_DB_SERVICES_2_NAME": "service_2",
                     "WHOOSHING_API_SERVICE_DB_SERVICES_2_PORT": "5433",
@@ -344,6 +360,8 @@ struct EnvironmentParsingTests {
             "WHOOSHING_API_SERVICE_DOMAIN": "testing.whooshing.space",
             "WHOOSHING_API_SERVICE_MANAGER_URL": "https://example.com",
             "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
+            
+            "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
             
             "WHOOSHING_API_SERVICE_FILE_STORAGE_DIR": "~/testing",
             "WHOOSHING_API_SERVICE_FILE_STORAGE_UNIX_PERMISSION_OWNER_ID": "1001",
@@ -383,6 +401,8 @@ struct EnvironmentParsingTests {
             "WHOOSHING_API_SERVICE_MANAGER_URL": "https://example.com",
             "WHOOSHING_API_SERVICE_HOSTNAME": "localhost",
             "WHOOSHING_API_SERVICE_DB_SERVICES_COUNT": "2",
+            
+            "WHOOSHING_API_SERVICE_LOG_DIRECTORY": "/User/tester/logfile.log",
             
                 "WHOOSHING_API_SERVICE_DB_SERVICES_1_NAME": "service_1",
                 "WHOOSHING_API_SERVICE_DB_SERVICES_1_PORT": "5432",

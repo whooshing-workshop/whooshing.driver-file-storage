@@ -4,18 +4,35 @@ import FileStorage
 import OrderedCollections
 import Collections
 import WhooshingServer
+import LoggingAdvanced
 
 public enum FileStorageDriverKey: Environment.DriverKey {
     public typealias Value = Environment.FS?
     public static let label = "file_storage"
-    public static let isOptional = true
-    public static let valueType: Environment.Types = .dataTemplate(Environment.FS.self)
+    public static let valueType: Environment.Types = .template(Environment.FS.self, optional: true)
+    public static func loggerStrategies(for directory: URL) -> [LoggerStrategy] {
+        do {
+            return [
+                try .init(
+                    label: "storage",
+                    level: .info,
+                    config: .file(
+                        match: { $0.contains("filestorage") },
+                        directory: directory,
+                        name: "storage.log"
+                    )
+                )
+            ]
+        } catch {
+            fatalError("创建 storage.log 策略失败: \(error)")
+        }
+    }
 }
 
 extension Environment.FS: Environment.Template {
     @inlinable
     public static func withEnv(dic origin: inout OrderedDictionary<String, Environment.Types>) {
-        origin["dir"] = .string
+        origin["dir"] = .string()
         origin["unix_permission_owner_id"] = .int(CUnsignedLong.self)
         origin["unix_permission_group_id"] = .int(CUnsignedLong.self)
         origin["unix_permission_rwx"] = .int(CModeT.self)

@@ -1,5 +1,5 @@
 {
-  "originHash" : "53d75804ff72450313fd8544fb9aa554412869c7ff918e48d87a3b89936d0bf0",
+  "originHash" : "f38c3ea4e5871bf4d4f0d9d65f62a9c2a6876d298c26f686eb51c7d89932a0d4",
   "pins" : [
     {
       "identity" : "anycodable",
@@ -303,8 +303,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-system",
       "state" : {
-        "revision" : "669763cfd5806a67e21972d7e5e2d6b80b1ea985",
-        "version" : "1.6.5"
+        "revision" : "7502b711c92a17741fa625d722b0ccbd595d8ed1",
+        "version" : "1.7.2"
       }
     },
     {
@@ -339,8 +339,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/whooshing-workshop/whooshing.toolbox-basic.git",
       "state" : {
-        "revision" : "b254a98ff8bcabd813e52deb1705f5e4e82ed5c2",
-        "version" : "1.5.6"
+        "revision" : "3dca6053273c7c3cc655f91f3e34fd8c45795c9d",
+        "version" : "1.5.9"
       }
     },
     {
@@ -375,8 +375,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/whooshing-workshop/whooshing.toolbox-server.git",
       "state" : {
-        "revision" : "a3432739c5c47351bfa530b16957b062ee74837e",
-        "version" : "1.1.10"
+        "revision" : "f1488d08a0b12ec4f3278f2548cf2bf6dbcf28ed",
+        "version" : "1.2.2"
       }
     },
     {
