@@ -60,7 +60,7 @@ struct EnvironmentParsingTests {
         #expect(project.hostname == "localhost")
         
         let fileStoragePara = try #require(project.fileStorage)
-        #expect(fileStoragePara.dir == "~/testing")
+        #expect(fileStoragePara.dir.absoluteString == "~/testing")
         
         guard case let .id(ownerId) = fileStoragePara.permission.owner else {
             throw "Owner Id Invalid"
@@ -376,7 +376,7 @@ struct EnvironmentParsingTests {
         #expect(project.hostname == "localhost")
 
         let fileStoragePara = try #require(project.fileStorage)
-        #expect(fileStoragePara.dir == "~/testing")
+        #expect(fileStoragePara.dir.absoluteString == "~/testing")
         
         guard case let .id(ownerId) = fileStoragePara.permission.owner else {
             throw "Owner Id Invalid"

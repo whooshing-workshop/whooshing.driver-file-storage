@@ -78,9 +78,7 @@ extension Whooshing {
         }
         
         return await .async { () throws(Failure) in
-            
-            let basePath = FileSystemTools.resolvePath(basePath: "/", append: fileStorageParameter.dir)
-            let mainDirPath = FileSystemTools.resolvePath(basePath: basePath, append: "./\(storagePath.string)")
+            let mainDirPath = FileSystemTools.resolvePath(basePath: fileStorageParameter.dir.path(), append: "./\(storagePath.string)")
             
             switch dirCreateAction {
             case .noAction:

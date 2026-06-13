@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "whooshing.driver-file-storage",
     platforms: [
-        .macOS(.v11),
+        .macOS(.v13),
         .iOS(.v14),
         .watchOS(.v6),
         .tvOS(.v13),
@@ -15,8 +15,8 @@ let package = Package(
         .library( name: "FileStorageDriver", targets: ["FileStorageDriver"] )
     ],
     dependencies: [
-        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-server.git", from: "1.2.2"),
-        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-file-storage", from: "1.0.5"),
+        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-server.git", from: "1.2.3"),
+        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-file-storage", from: "1.0.6"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.9.1")
     ],
     targets: [
