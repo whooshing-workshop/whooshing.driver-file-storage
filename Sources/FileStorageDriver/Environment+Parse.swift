@@ -7,9 +7,9 @@ import WhooshingServer
 import LoggingAdvanced
 
 public enum FileStorageDriverKey: Environment.DriverKey {
-    public typealias Value = Environment.FS?
+    public typealias Value = Environment.FS
     public static let label = "file_storage"
-    public static let valueType: Environment.Types = .template(Environment.FS.self, optional: true)
+    public static let valueType: Environment.Types = .template(Environment.FS.self)
     public static func loggerStrategies(for directory: URL) -> [LoggerStrategy] {
         do {
             return [

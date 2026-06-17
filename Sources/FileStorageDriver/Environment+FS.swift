@@ -7,7 +7,7 @@ import NIOFileSystem
 
 public extension Environment.Config {
     /// 文件加密系统的必要参数
-    var fileStorage: Environment.FS? { storage[FileStorageDriverKey.self] ?? nil } // 必须写为 ?? nil 而非 storage[XXX]!，否则可能引发崩溃
+    var fileStorage: Environment.FS { storage[FileStorageDriverKey.self]! } // 若指定为 Environment.FS?，则必须写为 ?? nil 而非 storage[XXX]!，否则可能引发崩溃
     
     /// 用于在无依赖 debug (Whooshing.Env.independentDebug) 模式下加载 FileStorage 依赖参数
     ///

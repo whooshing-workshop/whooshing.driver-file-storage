@@ -4,12 +4,20 @@ import Vapor
 import LoggingAdvanced
 import ErrorHandle
 
-extension Whooshing {
+// FileStorage 依赖环境变量：
+//  - <prefix>_FILE_STORAGE_DIR: URL
+//  - <prefix>_FILE_STORAGE_FILE_EXTENSION: String
+//  - <prefix>_FILE_STORAGE_FILE_UNIX_PERMISSION_OWNER_ID: UInt
+//  - <prefix>_FILE_STORAGE_FILE_UNIX_PERMISSION_GROUP_ID: UInt
+//  - <prefix>_FILE_STORAGE_FILE_UNIX_PERMISSION_RWX: CModeT(UInt16)
+
+public extension Whooshing {
     @frozen
-    public enum DirCreateAction: CustomStringConvertible, Loggerable {
+    enum DirCreateAction: CustomStringConvertible, Loggerable {
         case noAction
         case createIfNeed(withIntermediateDirectories: Bool = false)
         
+        @inlinable
         public var description: String {
             switch self {
             case .noAction: "noAction"
@@ -26,7 +34,7 @@ extension Whooshing {
     ///     - logger: 日志实例，不会直接使用该 logger 的 label，会派生 .filestorage 使用
     ///     - dirCreateAction: 创建动作，可选择自动创建根文件夹或无任何动作
     ///     - debugging: 调试状态，置为 true 则启动调试模式
-    public func syncMakeFileStorage(
+    func syncMakeFileStorage(
         for db: Environment.DB,
         storagePath: StoragePath,
         logger: Logger,
@@ -52,13 +60,13 @@ extension Whooshing {
     ///     - logger: 日志实例，不会直接使用该 logger 的 label，会派生 .filestorage 使用
     ///     - dirCreateAction: 创建动作，可选择自动创建根文件夹或无任何动作
     ///     - debugging: 调试状态，置为 true 则启动调试模式
-    public func makeFileStorage(
+    func makeFileStorage(
         for db: Environment.DB,
         storagePath: StoragePath,
         logger: Logger,
         dirCreateAction: DirCreateAction = .noAction,
         debugging: Bool = false
-    ) async -> Result<FileStorage, Failure> {
+    ) async -> Res<FileStorage, FileStorageErrcase> {
         let logger = logger.derive(subId: "filestorage")
         let preLogger = logger.derive(subId: "preinit")
         
@@ -67,17 +75,15 @@ extension Whooshing {
             "dir_create_action": .data(dirCreateAction)
         ])
         
-        guard let fileStorageParameter = config.fileStorage else {
-            return .failure(.fileStorageInitFailed, "基本配置未提供，不支持文件加密系统")
-        }
+        let fileStorageParameter = config.fileStorage
         
         preLogger.debug("任务参数", metadata: ["file_storage_parameter": .data(fileStorageParameter)])
         
         guard let key = db.parameter.fileStorageKey else {
-            return .failure(.fileStorageInitFailed, "数据库未设置加密密钥，不支持文件加密系统", metadata: ["db_id": .string(db.id.string)])
+            return .failure(FileStorageErrcase.initFailed, "数据库未设置加密密钥，不支持文件加密系统", metadata: ["db_id": .string(db.id.string)])
         }
         
-        return await .async { () throws(Failure) in
+        return await .async { () throws(FileStorageErrcase.ErrType) in
             let mainDirPath = FileSystemTools.resolvePath(basePath: fileStorageParameter.dir.path(), append: "./\(storagePath.string)")
             
             switch dirCreateAction {
@@ -85,14 +91,14 @@ extension Whooshing {
                 preLogger.info("不创建目录，默认目录已存在", metadata: ["path": .string(mainDirPath)])
                 break
             case .createIfNeed(withIntermediateDirectories: let c):
-                let permissionAttributes = try required(throws: Errcase.fileStorageInitFailed, "权限信息读取失败", metadata: ["path": .string(mainDirPath)]) {
+                let permissionAttributes = try required(throws: FileStorageErrcase.initFailed, "权限信息读取失败", metadata: ["path": .string(mainDirPath)]) {
                     try fileStorageParameter.permission.attributes.get()
                 }
                 
                 var isDirectory: ObjCBool = false
                 if !FileManager.default.fileExists(atPath: mainDirPath, isDirectory: &isDirectory) || !isDirectory.boolValue {
                     preLogger.info("目录不存在，正在创建", metadata: ["path": .string(mainDirPath)])
-                    try required(throws: Errcase.fileStorageInitFailed, "主目录创建失败") {
+                    try required(throws: FileStorageErrcase.initFailed, "主目录创建失败") {
                         try FileManager.default.createDirectory(
                             atPath: mainDirPath,
                             withIntermediateDirectories: c,
@@ -106,7 +112,7 @@ extension Whooshing {
             
             preLogger.info("接入文件加密系统前置任务完成")
             
-            return try await required(throws: Errcase.fileStorageInitFailed) {
+            return try await required(throws: FileStorageErrcase.initFailed) {
                 try await FileStorage.new(
                     eventLoop: app.eventLoopGroup.next(),
                     storagePath: mainDirPath,
