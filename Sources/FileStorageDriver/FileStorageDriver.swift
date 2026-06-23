@@ -80,7 +80,7 @@ public extension Whooshing {
         preLogger.debug("任务参数", metadata: ["file_storage_parameter": .data(fileStorageParameter)])
         
         guard let key = db.parameter.fileStorageKey else {
-            return .failure(FileStorageErrcase.initFailed, "数据库未设置加密密钥，不支持文件加密系统", metadata: ["db_id": .string(db.id.string)])
+            return .failure(FileStorageErrcase.initFailed, "数据库未设置加密密钥，不支持文件加密系统", metadata: ["db_id": .string(db.id.string)], category: .external())
         }
         
         return await .async { () throws(FileStorageErrcase.ErrType) in
@@ -91,14 +91,14 @@ public extension Whooshing {
                 preLogger.info("不创建目录，默认目录已存在", metadata: ["path": .string(mainDirPath)])
                 break
             case .createIfNeed(withIntermediateDirectories: let c):
-                let permissionAttributes = try required(throws: FileStorageErrcase.initFailed, "权限信息读取失败", metadata: ["path": .string(mainDirPath)]) {
+                let permissionAttributes = try required(throws: FileStorageErrcase.initFailed, "权限信息读取失败", metadata: ["path": .string(mainDirPath)], category: .inherit) {
                     try fileStorageParameter.permission.attributes.get()
                 }
                 
                 var isDirectory: ObjCBool = false
                 if !FileManager.default.fileExists(atPath: mainDirPath, isDirectory: &isDirectory) || !isDirectory.boolValue {
                     preLogger.info("目录不存在，正在创建", metadata: ["path": .string(mainDirPath)])
-                    try required(throws: FileStorageErrcase.initFailed, "主目录创建失败") {
+                    try required(throws: FileStorageErrcase.initFailed, "主目录创建失败", category: .internal) {
                         try FileManager.default.createDirectory(
                             atPath: mainDirPath,
                             withIntermediateDirectories: c,
@@ -112,7 +112,7 @@ public extension Whooshing {
             
             preLogger.info("接入文件加密系统前置任务完成")
             
-            return try await required(throws: FileStorageErrcase.initFailed) {
+            return try await required(throws: FileStorageErrcase.initFailed, category: .inherit) {
                 try await FileStorage.new(
                     eventLoop: app.eventLoopGroup.next(),
                     storagePath: mainDirPath,
