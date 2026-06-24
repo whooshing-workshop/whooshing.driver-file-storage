@@ -15,7 +15,7 @@ let package = Package(
         .library( name: "FileStorageDriver", targets: ["FileStorageDriver"] )
     ],
     dependencies: [
-        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-server.git", from: "1.2.8"),
+        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-server.git", from: "1.2.9"),
         .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-file-storage", from: "1.0.9"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.9.1")
     ],
