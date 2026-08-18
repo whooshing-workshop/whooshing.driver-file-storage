@@ -114,7 +114,7 @@ public extension Nexus {
             
             return try await required(throws: FileStorageErrcase.initFailed, category: .inherit) {
                 try await FileStorage.new(
-                    eventLoop: self.eventloopGroup.next(),
+                    eventLoop: self.eventLoopGroup.next(),
                     storagePath: mainDirPath,
                     dbConfigure: debugging ? db.testingConfig : db.config,
                     masterKey: key.key,
