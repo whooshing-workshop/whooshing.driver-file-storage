@@ -1,9 +1,9 @@
+import Nexus
 import Vapor
 import SystemPackage
 import FileStorage
 import OrderedCollections
 import Collections
-import WhooshingServer
 import LoggingAdvanced
 
 public enum FileStorageDriverKey: Environment.DriverKey {

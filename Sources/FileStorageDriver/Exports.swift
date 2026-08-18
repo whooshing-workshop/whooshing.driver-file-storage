@@ -1,2 +1,2 @@
-@_exported import WhooshingServer
+@_exported import Nexus
 @_exported import FileStorage

@@ -1,6 +1,6 @@
-import WhooshingServer
-import FileStorage
 import Vapor
+import Nexus
+import FileStorage
 import LoggingAdvanced
 import ErrorHandle
 
@@ -11,7 +11,7 @@ import ErrorHandle
 //  - <prefix>_FILE_STORAGE_FILE_UNIX_PERMISSION_GROUP_ID: UInt
 //  - <prefix>_FILE_STORAGE_FILE_UNIX_PERMISSION_RWX: CModeT(UInt16)
 
-public extension Whooshing {
+public extension Nexus {
     @frozen
     enum DirCreateAction: CustomStringConvertible, Loggerable {
         case noAction
@@ -114,7 +114,7 @@ public extension Whooshing {
             
             return try await required(throws: FileStorageErrcase.initFailed, category: .inherit) {
                 try await FileStorage.new(
-                    eventLoop: app.eventLoopGroup.next(),
+                    eventLoop: self.eventloopGroup.next(),
                     storagePath: mainDirPath,
                     dbConfigure: debugging ? db.testingConfig : db.config,
                     masterKey: key.key,

@@ -15,24 +15,24 @@ let package = Package(
         .library( name: "FileStorageDriver", targets: ["FileStorageDriver"] )
     ],
     dependencies: [
-        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-server.git", from: "1.3.0"),
-        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-file-storage", from: "1.0.9"),
-        .package(url: "https://github.com/apple/swift-log.git", from: "1.9.1")
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.9.1"),
+        .package(url: "https://github.com/whooshing-workshop/whooshing.nexus", from: "0.0.3"),
+        .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-file-storage", from: "1.1.0")
     ],
     targets: [
         .target(
             name: "FileStorageDriver",
             dependencies: [
-                .product(name: "WhooshingServer", package: "whooshing.toolbox-server"),
-                .product(name: "FileStorage", package: "whooshing.toolbox-file-storage"),
-                .product(name: "Logging", package: "swift-log")
+                .product(name: "Logging", package: "swift-log"),
+                .product(name: "Nexus", package: "whooshing.nexus"),
+                .product(name: "FileStorage", package: "whooshing.toolbox-file-storage")
             ]
         ),
         .testTarget(
             name: "file-storage-driver-Tests",
             dependencies: [
-                .product(name: "WhooshingServer", package: "whooshing.toolbox-server"),
-                .target(name: "FileStorageDriver")
+                .target(name: "FileStorageDriver"),
+                .product(name: "Nexus", package: "whooshing.nexus")
             ]
         )
     ]
