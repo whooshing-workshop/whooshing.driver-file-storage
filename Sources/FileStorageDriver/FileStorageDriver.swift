@@ -41,7 +41,7 @@ public extension Nexus {
         dirCreateAction: DirCreateAction = .noAction,
         debugging: Bool = false
     ) -> FileStorage {
-        asyncResultToSync {
+        try! asyncResultToSync {
             await self.makeFileStorage(
                 for: db,
                 storagePath: storagePath,
