@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", from: "1.9.1"),
-        .package(url: "https://github.com/whooshing-workshop/whooshing.nexus", from: "0.0.7"),
+        .package(url: "https://github.com/whooshing-workshop/whooshing.nexus", from: "1.0.0"),
         .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-file-storage", from: "1.1.0")
     ],
     targets: [
